@@ -19,13 +19,13 @@ void GPIOControl::setupPin(int pin, int direction)
 
 void GPIOControl::setHigh(int pin)
 {
-	GPIO::output(pin, GPIO::HIGH)
+	GPIO::output(pin, GPIO::HIGH);
 	pinStates_[pin] = true;
 }
 
 void GPIOControl::setLow(int pin)
 {
-	GPIO::output(pin, GPIO::LOW)
+	GPIO::output(pin, GPIO::LOW);
 	pinStates_[pin] = false;
 }
 
