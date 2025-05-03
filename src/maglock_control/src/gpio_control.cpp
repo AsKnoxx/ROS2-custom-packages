@@ -29,7 +29,7 @@ void GPIOControl::setLow(int pin)
 	pinStates_[pin] = false;
 }
 
-void toggle(int pin)
+void GPIOControl::toggle(int pin)
 {
 	if (pinStates_[pin] == false)
 		setHigh(pin);
