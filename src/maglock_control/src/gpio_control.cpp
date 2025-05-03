@@ -31,13 +31,15 @@ void GPIOControl::setLow(int pin)
 
 void GPIOControl::toggle(int pin)
 {
-	if (pinStates_[pin] == false)
-		setHigh(pin);
-	else
-		setLow(pin);
+	if (pinStates_.find(pin) == pinStates_.end())
+		return;
+
+	pinStates_[pin] ? setLow(pin) : setHigh(pin);
 }
 
 bool GPIOControl::getState(int pin) const
 {
+	if (pinStates_.find(pin) == pinStates_.end())
+		return false;
 	return pinStates_[pin];
 }
