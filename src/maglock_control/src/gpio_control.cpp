@@ -1,35 +1,43 @@
 #include "gpio_control.h"
 
-GPIOControl::GPIOControl(int pin) : pinNumber_(pin)
+GPIOControl::GPIOControl(int mode)
 {
-	GPIO::setmode(GPIO::BOARD);
-	GPIO::setup(pinNumber_, GPIO::OUT);
+	GPIO::setmode(mode);
 }
 
 GPIOControl::~GPIOControl()
 {
-	GPIO::cleanup(pinNumber_);
+	GPIO::cleanup();
 }
 
-void GPIOControl::setHigh()
+void GPIOControl::setupPin(int pin, int direction)
 {
-	GPIO::output(pinNumber_, GPIO::HIGH);
-	currentPinState_ = true;
+	GPIO::setup(pin, direction);
+	if (direction == GPIO::OUT)
+		pinStates_[pin] = false;
 }
 
-void GPIOControl::setLow()
+void GPIOControl::setHigh(int pin)
 {
-	GPIO::output(pinNumber_, GPIO::LOW);
-	currentPinState_ = false;
+	GPIO::output(pin, GPIO::HIGH)
+	pinStates_[pin] = true;
 }
 
-bool GPIOControl::getPinState() const
+void GPIOControl::setLow(int pin)
 {
-	return currentPinState_;
+	GPIO::output(pin, GPIO::LOW)
+	pinStates_[pin] = false;
 }
 
-void GPIOControl::togglePinState()
+void toggle(int pin)
 {
-	// Toggle the pin: if HIGH, set to LOW, otherwise HIGH
-	getPinState() ? setLow() : setHigh();
+	if (pinStates_[pin] == false)
+		setHigh(pin);
+	else
+		setLow(pin);
+}
+
+bool GPIOControl::getState(int pin) const
+{
+	return pinStates_[pin];
 }
