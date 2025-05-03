@@ -26,7 +26,7 @@ class GPIOControl
 		void toggle(int pin);
 
 		// Gets the pin's state
-		void getState(int pin) const;
+		bool getState(int pin) const;
 
 	private:
 		std::map<int, bool> pinStates_;
