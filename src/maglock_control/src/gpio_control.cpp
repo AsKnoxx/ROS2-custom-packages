@@ -50,9 +50,10 @@ void GPIOControl::toggle(int pin)
 	pinStates_[pin] ? setLow(pin) : setHigh(pin);
 }
 
-bool GPIOControl::getState(int pin) const
+
+bool GPIOControl::readPinState(int pin) const
 {
-	if (!pinDirection_.contains(pin) || pinDirection_[pin] == In)
-		return false;
+	if (pinDirection_[pin] == In)
+		return GPIO::input(pin);
 	return pinStates_.at(pin);
 }

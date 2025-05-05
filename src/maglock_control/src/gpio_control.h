@@ -37,8 +37,8 @@ class GPIOControl
 		// Switches a pin from HIGH to LOW and vice versa
 		void toggle(int pin);
 
-		// Gets the pin's state
-		bool getState(int pin) const;
+		// Reads the pin's state
+		bool readPinState(int pin);
 
 	private:
 		std::map<int, bool> pinStates_;
