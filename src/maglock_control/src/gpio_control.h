@@ -4,21 +4,21 @@
 #include <JetsonGPIO.h>
 #include <map>
 
-enum NumberingMode
-{
-	BOARD = GPIO::BOARD, 
-	BCM = GPIO::BCM
-};
-
-enum Direction
-{
-	INPUT = GPIO::INPUT,
-	OUTPUT = GPIO::OUTPUT
-};
-
 class GPIOControl
 {
 	public:
+		enum NumberingMode
+		{
+			BOARD = GPIO::BOARD, 
+			BCM = GPIO::BCM
+		};
+
+		enum Direction
+		{
+			In = GPIO::INPUT,
+			Out = GPIO::OUTPUT
+		};
+
 		// Constructs an object that uses board numbering method
 		GPIOControl(NumberingMode mode = BOARD);
 
