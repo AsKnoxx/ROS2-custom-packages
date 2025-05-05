@@ -1,6 +1,6 @@
 #include "gpio_control.h"
 
-GPIOControl::GPIOControl(int mode)
+GPIOControl::GPIOControl(NumberingMode mode)
 {
 	GPIO::setmode(mode);
 }
@@ -10,28 +10,41 @@ GPIOControl::~GPIOControl()
 	GPIO::cleanup();
 }
 
-void GPIOControl::setupPin(int pin, int direction)
+void GPIOControl::setupPin(int pin, Direction direction)
 {
 	GPIO::setup(pin, direction);
-	if (direction == GPIO::OUT)
+	if (direction == Out)
+	{
 		pinStates_[pin] = false;
+		pinDirection_[pin] = Out;
+	}
+	else if (direction == In)
+	{
+		pinDirection_[pin] = In;
+	}
 }
 
 void GPIOControl::setHigh(int pin)
 {
+	if (!pinDirection_.contains(pin) || pinDirection_[pin] == In)
+		return;
+
 	GPIO::output(pin, GPIO::HIGH);
 	pinStates_[pin] = true;
 }
 
 void GPIOControl::setLow(int pin)
 {
+	if (!pinDirection_.contains(pin) || pinDirection_[pin] == In)
+		return;
+
 	GPIO::output(pin, GPIO::LOW);
 	pinStates_[pin] = false;
 }
 
 void GPIOControl::toggle(int pin)
 {
-	if (pinStates_.find(pin) == pinStates_.end())
+	if (!pinDirection_.contains(pin) || pinDirection_[pin] == In)
 		return;
 
 	pinStates_[pin] ? setLow(pin) : setHigh(pin);
@@ -39,7 +52,7 @@ void GPIOControl::toggle(int pin)
 
 bool GPIOControl::getState(int pin) const
 {
-	if (pinStates_.find(pin) == pinStates_.end())
+	if (!pinDirection_.contains(pin) || pinDirection_[pin] == In)
 		return false;
-	return pinStates_[pin];
+	return pinStates_.at(pin);
 }
