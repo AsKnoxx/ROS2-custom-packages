@@ -4,17 +4,29 @@
 #include <JetsonGPIO.h>
 #include <map>
 
+enum NumberingMode
+{
+	BOARD = GPIO::BOARD, 
+	BCM = GPIO::BCM
+};
+
+enum Direction
+{
+	INPUT = GPIO::INPUT,
+	OUTPUT = GPIO::OUTPUT
+};
+
 class GPIOControl
 {
 	public:
 		// Constructs an object that uses board numbering method
-		GPIOControl(int mode = GPIO::BOARD);
+		GPIOControl(NumberingMode mode = BOARD);
 
 		// Destructor that cleans up all GPIO pins
 		~GPIOControl();
 
 		// Sets a pin to either input or output
-		void setupPin(int pin, int direction);
+		void setupPin(int pin, Direction direction);
 
 		// Sets a pin to HIGH
 		void setHigh(int pin);
