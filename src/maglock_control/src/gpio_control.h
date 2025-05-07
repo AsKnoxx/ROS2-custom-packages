@@ -45,6 +45,7 @@ class GPIOControl
 	private:
 		std::map<int, bool> pinStates_;
 		std::map<int, Direction> pinDirection_;
+		NumberingMode mode_;
 };
 
 #endif
