@@ -49,8 +49,16 @@ void GPIOControl::setupPin(int pin, Direction direction)
 
 void GPIOControl::setHigh(int pin)
 {
-	if (!pinDirection_.contains(pin) || pinDirection_[pin] == In)
+	if (!pinDirection_.contains(pin))
+	{
+		std::cerr << "Error: Pin " << pin << " has not been configured.\n";
 		return;
+	}
+	else if (pinDirection_[pin] == In)
+	{
+		std::cerr << "Error: Pin " << pin << " is an input pin.\n";
+		return;
+	}
 
 	GPIO::output(pin, GPIO::HIGH);
 	pinStates_[pin] = true;
