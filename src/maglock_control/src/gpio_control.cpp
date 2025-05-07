@@ -33,6 +33,9 @@ void GPIOControl::checkNumMode()
 void GPIOControl::setupPin(int pin, Direction direction)
 {
 	GPIO::setup(pin, direction);
+
+	// Tracks the state and direction for output  pins and tracks just direction
+	// for input pins
 	if (direction == Out)
 	{
 		pinStates_[pin] = false;
@@ -73,7 +76,13 @@ void GPIOControl::toggle(int pin)
 
 bool GPIOControl::readPinState(int pin) const
 {
-	if (pinDirection_[pin] == In)
+	// Checks if the pin has not been configured
+	if (pinDirection_.find(pin) == pinDirection_.end())
+	{
+		std::cerr << "Error: Pin " << pin << " has not been configured.\n";
+		return false;
+	}
+	else if (pinDirection_[pin] == In)
 		return GPIO::input(pin);
 	return pinStates_.at(pin);
 }
