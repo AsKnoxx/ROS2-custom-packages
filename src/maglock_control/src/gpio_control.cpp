@@ -3,11 +3,31 @@
 GPIOControl::GPIOControl(NumberingMode mode)
 {
 	GPIO::setmode(mode);
+	mode_ = mode;
 }
 
 GPIOControl::~GPIOControl()
 {
 	GPIO::cleanup();
+}
+
+void GPIOControl::checkNumMode()
+{
+	switch (mode_)
+	{
+	case BCM:
+		std::cout << "BCM numbering mode set\n";
+		return;
+	case CVM:
+		std::cout << "CVM numbering mode set\n";
+		return;
+	case TEGRA:
+		std::cout << "TEGRA_SOC numbering mode set\n";
+		return;
+	default:
+		std::cout << "BOARD numbering mode set\n";
+		return;
+	}
 }
 
 void GPIOControl::setupPin(int pin, Direction direction)

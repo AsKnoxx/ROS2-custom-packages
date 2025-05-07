@@ -27,6 +27,9 @@ class GPIOControl
 		// Destructor that cleans up all GPIO pins
 		~GPIOControl();
 
+		// Checks the current numbering mode
+		void checkNumMode();
+
 		// Sets a pin to either input or output
 		void setupPin(int pin, Direction direction);
 
@@ -40,7 +43,7 @@ class GPIOControl
 		void toggle(int pin);
 
 		// Reads the pin's state
-		bool readPinState(int pin);
+		bool readPinState(int pin) const;
 
 	private:
 		std::map<int, bool> pinStates_;
