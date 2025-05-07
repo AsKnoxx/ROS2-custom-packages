@@ -10,7 +10,9 @@ class GPIOControl
 		enum NumberingMode
 		{
 			BOARD = GPIO::BOARD, 
-			BCM = GPIO::BCM
+			BCM = GPIO::BCM,
+			CVM = GPIO::CVM,
+			TEGRA = GPIO::TEGRA_SOC
 		};
 
 		enum Direction
@@ -19,7 +21,7 @@ class GPIOControl
 			Out = GPIO::OUTPUT
 		};
 
-		// Constructs an object that uses board numbering method
+		// Constructs an object that uses board numbering method by default
 		GPIOControl(NumberingMode mode = BOARD);
 
 		// Destructor that cleans up all GPIO pins
