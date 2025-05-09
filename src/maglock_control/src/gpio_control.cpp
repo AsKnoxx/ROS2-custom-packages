@@ -109,3 +109,18 @@ bool GPIOControl::readPinState(int pin) const
 		return GPIO::input(pin);
 	return pinStates_.at(pin);
 }
+
+void GPIOControl::pinFunction(int pin)
+{
+	if (pinDirection_.find(pin) == pinDirection_.end())
+	{
+		std::cerr << "Error: Pin " << pin << " has not been configured.\n";
+		return;
+	}
+	else if (pinDirection_[pin] == In)
+	{
+		std::cout << "Pin " << pin << " is an input pin.\n";
+		return;
+	}
+	std::cout << "Pin " << pin << " is an output pin.\n";
+}

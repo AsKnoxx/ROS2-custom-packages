@@ -45,6 +45,9 @@ class GPIOControl
 		// Reads the pin's state
 		bool readPinState(int pin) const;
 
+		// Prints the direction of a pin
+		void pinFunction(int pin);
+
 	private:
 		std::map<int, bool> pinStates_;
 		std::map<int, Direction> pinDirection_;
